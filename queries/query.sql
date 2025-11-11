@@ -65,6 +65,15 @@ OFFSET 8 ROWS FETCH NEXT 2 ROW ONLY
 
 
 
+
+
+
+
+
+
+
+
+
 --Лабораторная работа № 3
 
 CREATE TABLE "Countries"(
@@ -75,31 +84,67 @@ CREATE TABLE "Countries"(
 "Continent" varchar(150)
 )
 
-
+SELECT *
+FROM "Countries"
 -- 1.	Вывести названия и столицы пяти наибольших стран по площади.
+SELECT "Name", "Capital"
+FROM "Countries"
+ORDER BY "Square" DESC
+LIMIT 5;
 
 -- 2.	Вывести список африканских стран, население которых не превышает 1 млн. чел.
+SELECT *
+FROM "Countries"
+WHERE "Continent" = 'Африка' AND "Population" < 1000000;
 
 -- 3.	Вывести список стран, население которых больше 5 млн. чел., а площадь меньше 100 тыс. кв. км, и они расположены не в Европе.
-
--- 4.	Вывести список стран Северной и Южной Америки, население которых больше 20 млн. чел., или стран Африки, у которых население больше 30 млн. чел.
-
+SELECT *
+FROM "Countries"
+WHERE "Population" > 5000000 AND "Continent" != 'Европа' AND "Square" < 100000;
+-- 4.	Вывести список стран Северной и	 Южной Америки, население которых больше 20 млн. чел., или стран Африки, у которых население больше 30 млн. чел.
+SELECT *
+FROM "Countries"
+WHERE ("Continent" = 'Северная Америка' OR "Continent" = 'Южная Америка')
+  AND "Population" > 20000000
+   OR
+  "Continent" = 'Африка' AND "Population" > 30000000;
+  
 -- 5.	Вывести список стран, население которых составляет от 10 до 100 млн. чел., а пло-щадь не больше 500 тыс. кв. км.
-
+SELECT *
+FROM "Countries"
+WHERE "Population" BETWEEN 10000000 AND 100000000
+  AND "Square" <= 500000;
 -- 6.	Вывести список стран, названия которых не начинаются с буквы «К».
-
+SELECT *
+FROM "Countries"
+WHERE "Name" NOT LIKE 'К%';
 -- 7.	Вывести список стран, в названии которых третья буква – «а», а предпоследняя –«и».
-
+SELECT *
+FROM "Countries"
+WHERE SUBSTRING("Name", 3, 1) = 'а'
+  AND SUBSTRING("Name", LENGTH("Name") - 1, 1) = 'и';
 -- 8.	Вывести список стран, в названии которых вторая буква – гласная.
-
+SELECT *
+FROM "Countries"
+WHERE SUBSTRING("Name", 2, 1) IN ('а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я');
 -- 9.	Вывести список стран, названия которых начинаются с букв от «К» до «П».
-
+SELECT *
+FROM "Countries"
+WHERE "Name" BETWEEN 'К' AND 'П';
 -- 10.	Вывести список стран, названия которых начинаются с букв от «А» до «Г», но не с буквы «Б».
-
+SELECT *
+FROM "Countries"
+WHERE "Name" BETWEEN 'А' AND 'Г'
+  AND "Name" NOT LIKE 'Б%';
 -- 11.	Вывести список стран, столицы которых есть в базе.
-
+SELECT *
+FROM "Countries"
+WHERE "Capital" IS NOT NULL
+  AND "Capital" != '';
 -- 12.	Вывести список стран Африки, Северной и Южной Америки.
-
+SELECT *
+FROM "Countries"
+WHERE "Continent" IN ('Африка', 'Северная Америка', 'Южная Америка');
 
 
 
